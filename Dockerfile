@@ -2,10 +2,15 @@ FROM ubuntu:bionic
 
 ENV BAZEL_VERSION 4.1.0
 ENV RAY_VERSION 1.4.0
-RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get -qq update && apt-get -qq -y install curl wget gnupg nodejs git build-essential unzip psmisc \
+
+RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg nodejs git build-essential unzip psmisc \
     && curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg \
     && mv bazel.gpg /etc/apt/trusted.gpg.d/
+    
+RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs
+    
 RUN if [ "$(uname -m)" = "aarch64" ]; then \
         echo "deb [arch=arm64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list ; \
     else \
