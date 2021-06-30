@@ -12,10 +12,10 @@ before_install:
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
   - docker version
   - docker buildx version
-#  - docker buildx create --use
+  - docker buildx create --use
   - docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
 
 script:
 #  - if [ "${TRAVIS_CPU_ARCH}" = "amd64" ]; then docker buildx build --platform linux/amd64 -t ${IMAGE_TAG} -f Dockerfile . ; else docker buildx build --platform linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . ; fi
-  - docker build -t ${IMAGE_TAG} -f Dockerfile . 
-#  - docker buildx build --platform linux/amd64,linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . 
+#  - docker build -t ${IMAGE_TAG} -f Dockerfile . 
+  - docker buildx build --platform linux/amd64,linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . 
