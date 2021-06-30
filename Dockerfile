@@ -11,7 +11,7 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then \
         echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list ; \
     fi \
     && apt-get -y update \
-    && apt-get install bazel
+    && apt-get install -y bazel
 RUN curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh -o /tmp/miniforge.sh \
     && bash /tmp/miniforge.sh -bfp /usr/local \
     && rm -rf /tmp/miniforge.sh \
