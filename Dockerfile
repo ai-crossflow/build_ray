@@ -21,7 +21,7 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then \
 RUN curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh -o /tmp/miniforge.sh \
     && bash /tmp/miniforge.sh -bfp /usr/local \
     && rm -rf /tmp/miniforge.sh \
-    && conda install -y python=3.9 \
+    && conda install -y python=3.8 \
     && conda update conda \
     && apt-get -qq -y remove curl bzip2 \
     && apt-get -qq -y autoremove \
@@ -30,7 +30,9 @@ RUN curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download
     && conda clean --all --yes
 
 RUN bazel version
-RUN conda install -y jupyterlab cython=0.29
+
+# build ray
+RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy
 
 RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
     && cd ray/dashboard/client \
