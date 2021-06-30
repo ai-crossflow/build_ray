@@ -31,7 +31,7 @@ RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray
     && pushd ray/dashboard/client \
     && npm install \
     && npm run build \
-    && popd
+    && popd \
     && pushd ray/python \
     && pip install -e . --verbose \
     && popd
