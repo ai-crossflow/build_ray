@@ -13,8 +13,13 @@ RUN apt-get -qq update && apt-get -qq -y install  bzip2 apt-transport-https curl
     && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log \
     && conda clean --all --yes
     
-RUN if [ "$(uname -m)" = "aarch64" ]; then curl -sSL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-arm64 -o /tmp/bazel ; else  curl -sSL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-amd64 -o /tmp/bazel ; fi 
-RUN chmod +x /tmp/bazel && mv /tmp/bazel /usr/local/bin/
+RUN if [ "$(uname -m)" = "aarch64" ]; then \
+        curl -sSL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-arm64 -o /tmp/bazel ; \
+    else \
+        curl -sSL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-x86_64 -o /tmp/bazel ; \
+    fi \
+    && chmod +x /tmp/bazel \
+    && mv /tmp/bazel /usr/local/bin/
 RUN bazel version
 RUN conda install jupyterlab
 
