@@ -4,7 +4,7 @@ RUN apt-get -qq update && apt-get -qq -y install curl bzip2 \
     && curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh -o /tmp/miniforge.sh \
     && bash /tmp/miniforge.sh -bfp /usr/local \
     && rm -rf /tmp/miniforge.sh \
-    && conda install -y python=2.7 \
+    && conda install -y python=3.9 \
     && conda update conda \
     && apt-get -qq -y remove curl bzip2 \
     && apt-get -qq -y autoremove \
