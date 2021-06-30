@@ -34,7 +34,8 @@ RUN bazel version
 # build ray
 RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy aiohttp gpustat jsonschema msgpack-python pydantic pyyaml psutil \
                      blessings multidict yarl \
-                     aioredis click opencensus filelock
+                     aioredis click opencensus filelock aiohttp-cors
+RUN pip install redis py-spy colorama
 
 RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
     && cd ray/dashboard/client \
