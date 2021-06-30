@@ -1,7 +1,7 @@
 FROM ubuntu:bionic
 
 ENV BAZEL_VERSION 4.1.0
-RUN apt-get -qq update && apt-get -qq -y install  bzip2 apt-transport-https curl gnupg \
+RUN apt-get -qq update && apt-get -qq -y install curl wget \
     && curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh -o /tmp/miniforge.sh \
     && bash /tmp/miniforge.sh -bfp /usr/local \
     && rm -rf /tmp/miniforge.sh \
@@ -14,9 +14,9 @@ RUN apt-get -qq update && apt-get -qq -y install  bzip2 apt-transport-https curl
     && conda clean --all --yes
     
 RUN if [ "$(uname -m)" = "aarch64" ]; then \
-        curl -sSL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-arm64 -o /tmp/bazel ; \
+        wget https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-arm64 -o /tmp/bazel ; \
     else \
-        curl -sSL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-x86_64 -o /tmp/bazel ; \
+        wget https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-x86_64 -o /tmp/bazel ; \
     fi \
     && chmod +x /tmp/bazel \
     && mv /tmp/bazel /usr/local/bin/
