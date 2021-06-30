@@ -37,8 +37,12 @@ RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy aiohttp gpusta
                      aioredis click opencensus filelock aiohttp-cors
 RUN pip install redis py-spy colorama
 
-RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
-    && cd ray/dashboard/client \
+
+RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git
+RUN cd ray && bazel build //:ray_pkg
+RUN cd ray && bazel build //:cpp:ray_cpp_pkg
+RUN cd ray && bazel build //:java:ray_java_pkg
+RUN cd ray/dashboard/client \
     && npm install \
     && npm run build \
     && cd ../../.. \
