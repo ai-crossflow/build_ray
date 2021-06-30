@@ -1,8 +1,9 @@
 FROM ubuntu:bionic
 
 ENV BAZEL_VERSION 4.1.0
-
-RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg \
+ENV RAY_VERSION 1.4.0
+RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get -qq update && apt-get -qq -y install curl wget gnupg nodejs git build-essential unzip psmisc \
     && curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg \
     && mv bazel.gpg /etc/apt/trusted.gpg.d/
 RUN if [ "$(uname -m)" = "aarch64" ]; then \
@@ -22,14 +23,17 @@ RUN curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log \
     && conda clean --all --yes
-    
-#RUN if [ "$(uname -m)" = "aarch64" ]; then \
-#        wget https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-arm64 -o /tmp/bazel ; \
-#    else \
-#        wget https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-linux-x86_64 -o /tmp/bazel ; \
-#    fi \
-#    && chmod +x /tmp/bazel \
-#    && mv /tmp/bazel /usr/local/bin/
+
 RUN bazel version
-RUN conda install jupyterlab scipy
+RUN conda install -y jupyterlab cython=0.29
+
+RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
+    && pushd ray/dashboard/client \
+    && npm install \
+    && npm run build \
+    && popd
+    && pushd ray/python \
+    && pip install -e . --verbose \
+    && popd
+
 CMD  ["/bin/sh"]
