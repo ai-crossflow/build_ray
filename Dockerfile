@@ -8,16 +8,16 @@ RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg git build-essen
     && mv bazel.gpg /etc/apt/trusted.gpg.d/
     
 RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get update \
-    && apt-get install -y nodejs
+    && apt-get -qq update \
+    && apt-get -qq -y install nodejs
     
 RUN if [ "$(uname -m)" = "aarch64" ]; then \
         echo "deb [arch=arm64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list ; \
     else \
         echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list ; \
     fi \
-    && apt-get -y update \
-    && apt-get install -y bazel
+    && apt-get -qq update \
+    && apt-get -qq -y install bazel
 RUN curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh -o /tmp/miniforge.sh \
     && bash /tmp/miniforge.sh -bfp /usr/local \
     && rm -rf /tmp/miniforge.sh \
@@ -38,6 +38,6 @@ RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray
     && npm run build \
     && cd ../../.. \
     && cd ray/python \
-    && pip install -e . --verbose
+    && pip install -e .
     
 CMD  ["/bin/sh"]
