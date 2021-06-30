@@ -32,7 +32,9 @@ RUN curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download
 RUN bazel version
 
 # build ray
-RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy
+RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy aiohttp gpustat jsonschema msgpack-python pydantic pyyaml psutil \
+                     blessings multidict yarl \
+                     aioredis click opencensus filelock
 
 RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
     && cd ray/dashboard/client \
