@@ -33,12 +33,11 @@ RUN bazel version
 RUN conda install -y jupyterlab cython=0.29
 
 RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
-    && pushd ray/dashboard/client \
+    && cd ray/dashboard/client \
     && npm install \
     && npm run build \
-    && popd \
-    && pushd ray/python \
-    && pip install -e . --verbose \
-    && popd
-
+    && cd ../../.. \
+    && cd ray/python \
+    && pip install -e . --verbose
+    
 CMD  ["/bin/sh"]
