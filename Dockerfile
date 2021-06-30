@@ -11,6 +11,6 @@ RUN apt-get -qq update && apt-get -qq -y install curl bzip2 \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log \
     && conda clean --all --yes
-RUN which python conda
+RUN conda install jupyterlab
 
 CMD  ["/bin/sh"]
