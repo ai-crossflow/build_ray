@@ -12,5 +12,5 @@ before_install:
   - sudo add-apt-repository "deb [arch=${TRAVIS_CPU_ARCH}] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   - sudo apt-get update
   - docker version
-  - docker login -u ${DOCKER_USER} -p ${DOCKER_PWD}
+  - docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 
