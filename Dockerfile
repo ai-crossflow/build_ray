@@ -34,8 +34,8 @@ RUN bazel version
 # build ray
 RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy aiohttp gpustat jsonschema msgpack-python pydantic pyyaml psutil \
                      blessings multidict yarl uvicorn requests pandas lz4-c \
-                     aioredis click opencensus filelock aiohttp-cors starlette fastapi tensorboardx 2.2
-RUN pip install redis py-spy colorama
+                     aioredis click opencensus filelock aiohttp-cors starlette fastapi tensorboardx tabulate colorama
+RUN pip install redis py-spy 
 
 
 RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git
