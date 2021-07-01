@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 ENV BAZEL_VERSION 4.1.0
 ENV RAY_VERSION 1.4.0
 
-RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg git build-essential unzip psmisc \
+RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg git build-essential unzip psmisc make g++ \
     && curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg \
     && mv bazel.gpg /etc/apt/trusted.gpg.d/
     
@@ -33,8 +33,8 @@ RUN bazel version
 
 # build ray
 RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy aiohttp gpustat jsonschema msgpack-python pydantic pyyaml psutil \
-                     blessings multidict yarl \
-                     aioredis click opencensus filelock aiohttp-cors
+                     blessings multidict yarl uvicorn requests pandas lz4-c \
+                     aioredis click opencensus filelock aiohttp-cors starlette fastapi tensorboardx 2.2
 RUN pip install redis py-spy colorama
 
 
