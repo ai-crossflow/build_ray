@@ -13,14 +13,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
     
 RUN if [ "$(uname -m)" = "aarch64" ]; then \
         curl -fsSL https://github.com/bazelbuild/bazel/releases/download/4.1.0/bazel-4.1.0-linux-arm64 -o /tmp/bazel ; \
-#        echo "deb [arch=arm64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list ; \
     else \
         curl -fsSL https://github.com/bazelbuild/bazel/releases/download/4.1.0/bazel-4.1.0-linux-x86_64 -o /tmp/bazel ; \
-#        echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list ; \
     fi \
-#    && apt-get -qq update \
-#    && apt-get -qq -y install bazel
-    && chmod +x /tmp/bazel && mv /tmp/bazel /usr/local/bin/
+    && chmod +x /tmp/bazel
+    && mv /tmp/bazel /usr/local/bin/
 RUN curl -sSL  https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh -o /tmp/miniforge.sh \
     && bash /tmp/miniforge.sh -bfp /usr/local \
     && rm -rf /tmp/miniforge.sh \
