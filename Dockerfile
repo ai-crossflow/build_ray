@@ -1,7 +1,7 @@
 FROM ubuntu:bionic
 
 ENV BAZEL_VERSION 4.1.0
-ENV RAY_VERSION 1.4.0
+ENV RAY_VERSION 1.4.1
 
 RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg git build-essential unzip psmisc make g++ pkg-config openjdk-8-jdk \
     && curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg \
@@ -38,8 +38,8 @@ RUN conda install -y jupyterlab cython=0.29 grpcio protobuf scipy aiohttp gpusta
 RUN pip install redis py-spy aioredis click opencensus filelock aiohttp-cors starlette fastapi tensorboardx tabulate colorama prometheus-client \
         flask 
 
-#RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git
-RUN git clone --depth 1 https://github.com/ray-project/ray.git
+RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git
+#RUN git clone --depth 1 https://github.com/ray-project/ray.git
 RUN cd ray && bazel build //:ray_pkg
 RUN cd ray && bazel build //cpp:ray_cpp_pkg
 RUN cd ray && bazel build //java:ray_java_pkg
