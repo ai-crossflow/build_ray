@@ -2,7 +2,7 @@ dist: bionic
 
 env:
   global:
-    - IMAGE_TAG=crossflowai/ray_builder_base:
+    - IMAGE_TAG=crossflowai/ray_builder_base
 #arch:
 #  - amd64
 #  - arm64
