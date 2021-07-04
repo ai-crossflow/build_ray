@@ -2,11 +2,10 @@ dist: bionic
 
 env:
   global:
-    - RAY_VERSION=v1.4.0
-    - IMAGE_TAG=crossflowai/ray_tf:$RAY_VERSION
-arch:
+    - IMAGE_TAG=crossflowai/ray_builder_base:
+#arch:
 #  - amd64
-  - arm64
+#  - arm64
   
 before_install:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -20,5 +19,5 @@ before_install:
 
 script:
 #  - if [ "${TRAVIS_CPU_ARCH}" = "amd64" ]; then docker buildx build --platform linux/amd64 -t ${IMAGE_TAG} -f Dockerfile . ; else docker buildx build --platform linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . ; fi
-  - docker build -t ${IMAGE_TAG} -f Dockerfile . 
-#  - docker buildx build --platform linux/amd64,linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . 
+#  - docker build -t ${IMAGE_TAG} -f Dockerfile . 
+  - docker buildx build --platform linux/amd64,linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . 
