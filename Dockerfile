@@ -3,7 +3,8 @@ FROM ubuntu:bionic
 ENV BAZEL_VERSION 4.1.0
 ENV RAY_VERSION 1.4.1
 
-RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg git build-essential unzip psmisc make g++ pkg-config openjdk-8-jdk libboost-all-dev \
+RUN apt-get -qq update && apt-get -qq -y install curl wget gnupg git build-essential unzip psmisc \
+    make g++ pkg-config openjdk-8-jdk libboost-all-dev libmsgpack-dev libgflags-dev googletest \
     && curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg \
     && mv bazel.gpg /etc/apt/trusted.gpg.d/
     
