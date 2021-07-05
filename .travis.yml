@@ -2,7 +2,7 @@ dist: bionic
 
 env:
   global:
-    - IMAGE_TAG=crossflowai/ray_builder_base
+    - IMAGE_TAG=crossflowai/ray_builder_${TRAVIS_CPU_ARCH}
 arch:
   - amd64
   - arm64
@@ -19,5 +19,6 @@ before_install:
 
 script:
 #  - if [ "${TRAVIS_CPU_ARCH}" = "amd64" ]; then docker buildx build --platform linux/amd64 -t ${IMAGE_TAG} -f Dockerfile . ; else docker buildx build --platform linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . ; fi
-  - docker build -t ${IMAGE_TAG} -f Dockerfile . 
 #  - docker buildx build --platform linux/amd64,linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . 
+  - docker build -t ${IMAGE_TAG} -f Dockerfile . 
+  - docker push ${IMAGE_TAG}
