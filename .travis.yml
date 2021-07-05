@@ -3,7 +3,7 @@ dist: bionic
 env:
   global:
     - RAY_VERSION=v1.4.0
-    - IMAGE_TAG=crossflowai/ray_tf:$RAY_VERSION
+    - IMAGE_TAG=crossflowai/ray:$RAY_VERSION
 arch:
 #  - amd64
   - arm64
