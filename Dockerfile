@@ -1,6 +1,7 @@
 FROM crossflowai/ray_builder
 
-ENV RAY_VERSION 1.4.1
+ARG RAY_VERSION=1.4.1
+#ENV RAY_VERSION 1.4.1
 
 RUN bazel version
 RUN conda info
