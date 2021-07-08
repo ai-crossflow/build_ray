@@ -20,5 +20,5 @@ before_install:
 
 script:
 #  - if [ "${TRAVIS_CPU_ARCH}" = "amd64" ]; then docker buildx build --platform linux/amd64 -t ${IMAGE_TAG} -f Dockerfile . ; else docker buildx build --platform linux/arm64 -t ${IMAGE_TAG} -f Dockerfile . ; fi
-  - docker build -t ${IMAGE_TAG} -f Dockerfile . 
+  - docker build --build-arg RAY_VERSION=${RAY_VERSION} -t ${IMAGE_TAG} -f Dockerfile . 
   - docker push ${IMAGE_TAG}
