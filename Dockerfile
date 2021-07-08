@@ -22,6 +22,7 @@ RUN cd ray/dashboard/client \
     && npm run build \
     && cd ../../.. \
     && cd ray/python \
-    && pip install -e .
+    && pip install -e . \
+    && pip cache purge
     
 CMD  ["/bin/sh"]
