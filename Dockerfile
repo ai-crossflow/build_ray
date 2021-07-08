@@ -1,7 +1,6 @@
 FROM crossflowai/ray_builder
 
 ARG RAY_VERSION=1.4.1
-#ENV RAY_VERSION 1.4.1
 
 RUN bazel version
 RUN conda info
@@ -14,7 +13,6 @@ RUN pip install redis py-spy aioredis click opencensus filelock aiohttp-cors sta
         flask 
 
 RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git
-#RUN git clone --depth 1 https://github.com/ray-project/ray.git
 RUN cd ray && bazel build //:ray_pkg
 RUN cd ray && bazel build //cpp:ray_cpp_pkg
 RUN cd ray && bazel build //java:ray_java_pkg
