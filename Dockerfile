@@ -3,19 +3,15 @@ FROM crossflowai/ray_builder
 ARG RAY_VERSION=1.5.0
 
 RUN bazel version
-RUN conda info
+RUN conda info 
 
-RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git
+ENV RAY_INSTALL_JAVA=0
+ENV RAY_INSTALL_CPP=0
 
-RUN cd ray && bazel build //:ray_pkg
-RUN cd ray && bazel build //cpp:ray_cpp_pkg
-RUN cd ray && bazel build //java:ray_java_pkg
-RUN cd ray/dashboard/client \
-    && npm install \
-    && npm run build \
-    && cd ../../.. \
-    && cd ray/python \
-    && pip install -e . \
+RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
+    && cd ray && bazel build //:ray_pkg
+RUN cd ray/dashboard/client && npm install && npm run build
+RUN cd ray/python && python setup.py install \
     && pip cache purge
 
 CMD  ["/bin/sh"]
