@@ -11,8 +11,8 @@ ENV RAY_INSTALL_CPP=0
 RUN git clone -b ray-${RAY_VERSION} --depth 1 https://github.com/ray-project/ray.git \
     && cd ray && bazel build //:ray_pkg && cd .. \
     && cd ray/dashboard/client && npm install && npm run build && cd ../../.. \
-    && pip install py_spy \
-    && conda install numpy aiohttp aioredis gpustat && conda clean --all --yes \
+    && conda install numpy aiohttp gpustat && conda clean --all --yes \
+    && pip install py_spy aioredis \
     && cd ray/python && python setup.py install && pip cache purge && cd ../.. \
     && rm -rf ray
 
